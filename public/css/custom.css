@@ -1,0 +1,19 @@
+.flex {
+    display: flex;
+}
+.price-start {
+    width: 8rem;
+    text-align: end;
+}
+.price-dot {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    align-self: flex-end;
+}
+.price-end {
+    width: 3rem;
+}
+
+.icon1halfx {
+    font-size: 1.5rem;
+}
