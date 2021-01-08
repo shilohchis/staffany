@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         $this->attributes['email'] = strtolower($value);
     }
+
+    public function weeks()
+    {
+        return $this->hasMany(Week::class);
+    }
 }
