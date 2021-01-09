@@ -50,9 +50,13 @@
                                         name="title"
                                         required
                                     >
-
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-4">
                                     @error('title')
-                                        <span class="form-text small invalid-feedback">{{ $message }}</span>
+                                        <span class="small red">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -78,9 +82,6 @@
                                         name="start_date"
                                         required
                                     >
-                                    @error('start_time')
-                                        <span class="form-text small invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-2">
                                     <input
@@ -91,6 +92,17 @@
                                         name="start_time"
                                         required
                                     >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-4">
+                                    @error('start_date')
+                                        <span class="small red">{{ $message }}</span>
+                                    @enderror
+                                    @error('start_time')
+                                        <span class="small red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">

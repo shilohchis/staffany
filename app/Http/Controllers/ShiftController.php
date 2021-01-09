@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Week;
 use App\Http\Traits\CommonHelper;
 use App\Rules\EndShift;
+use App\Rules\IsPublished;
+use App\Rules\IsClash;
 
 class ShiftController extends Controller
 {
@@ -20,13 +23,23 @@ class ShiftController extends Controller
     {
         $start = request('start_date')." ".request('start_time');
         $end = request('end_date')." ".request('end_time');
-        request()->validate([
+        $seg = request()->segment(2);
+        //tambahan
+        $arr = [
             'title' => 'required|string',
             'end_time' => [
                 'required',
-                new EndShift($start, $end)
+                new EndShift($start, $end),
+                new IsClash('end')
             ],
-        ]);
+            'start_time' => [
+                new IsClash('start')
+            ],
+            'start_date' => [
+                new IsPublished(Route::currentRouteAction() == 'update' ? $seg : null),
+            ]
+        ];
+        request()->validate($arr);
     }
 
     public function index()
@@ -42,9 +55,21 @@ class ShiftController extends Controller
     }
 
     public function store()
-    {
+    {   //dd(request()->all());
         $this->validating();
-
+        try {
+            Week::create([
+                'title' => request('title'),
+                'day' => $this->getDayFromDate( request('start_date') ),
+                'week' => $this->getWeekNumberInMonth( request('start_date') ),
+                'start_time' => request('start_date')." ".request('start_time'),
+                'end_time' => request('end_date')." ".request('end_time'),
+                'user_id' => auth()->user()->id
+            ]);
+            return $this->redirectWithMsg('success', __('flash.sadd'), 'shifts.create');
+        } catch(Exception $e) {
+            return $this->redirectWithMsg('error', $e->getMessage(), 'back');
+        }
     }
 
     public function show(Week $shift)  //view
@@ -54,7 +79,7 @@ class ShiftController extends Controller
 
     public function edit(Week $shift) //view
     {
-
+        return view('shifts.form', compact('shift'));
     }
 
     public function update(Week $shift)
