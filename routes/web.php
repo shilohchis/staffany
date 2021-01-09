@@ -23,8 +23,5 @@ Route::group([
     'middleware' => ['auth']
 ], function() {
     Route::get('home', 'HomeController@index')->name('home');
-    Route::prefix('shifts')->name('shifts.')->group(function() {
-        Route::get('index', 'ShiftController@index')->name('index');
-        Route::post('/', 'ShiftController@store')->name('store');
-    });
+    Route::resource('shifts', 'ShiftController');
 });
