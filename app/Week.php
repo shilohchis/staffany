@@ -50,14 +50,14 @@ class Week extends Model
                      ->whereDate('end_time', '<=', $end);
     }
 
-    public function getStartTimeAttribute($val)
+    public function getStartTextAttribute()
     {
-        return $this->formatDateTime($val, 'd F Y H:i');
+        return $this->formatDateTime($this->attributes['start_time'], 'd F Y H:i');
     }
 
-    public function getEndTimeAttribute($val)
+    public function getEndTextAttribute()
     {
-        return $this->formatDateTime($val, 'd F Y H:i');
+        return $this->formatDateTime($this->attributes['end_time'], 'd F Y H:i');
     }
 
     public function user()

@@ -40,14 +40,7 @@
                                         $order = request('order');
                                     @endphp
                                     <tr>
-                                        <th class="text-center tborder-right selection @if($col == 'title') @if($order == 'desc') arrow-down @else arrow-up @endif @endif">
-                                            <a href="{{ route(Route::currentRouteName(), [
-                                                'col' => 'title',
-                                                'order' => $order == 'asc' ? 'desc' : 'asc'
-                                                ]) }}">
-                                                Title
-                                            </a>
-                                        </th>
+                                        <th class="text-center tborder-right">Title</th>
                                         <th class="text-center tborder-right">Day</th>
                                         <th class="text-center tborder-right">Week Number</th>
                                         <th class="text-center tborder-right">Shift Time</th>
@@ -59,9 +52,9 @@
                                     @foreach($shifts as $s)
                                     <tr>
                                         <td class="tborder">{{ $s->title }}</td>
-                                        <td class="tborder">{{ ucwords($s->day) }} {{ $s->big_unit }}</td>
-                                        <td class="tborder">{{ $s->week }} {{ $s->small_unit }}</td>
-                                        <td class="tborder">{{ $s->start_time }} - {{ $s->end_time }}</td>
+                                        <td class="tborder">{{ ucwords($s->day) }}</td>
+                                        <td class="tborder">{{ $s->week }}</td>
+                                        <td class="tborder">{{ $s->start_text }} - {{ $s->end_text }}</td>
                                         <td class="tborder">
                                             <button class="btn btn-{{ $s->is_published ? 'success' : 'secondary publish' }}" type="button" data-id="{{ $s->id }}">
                                                 {{ $s->is_published ? 'Published' : 'Publish' }}
@@ -73,6 +66,13 @@
                                                     <i class="fa fa-eye"></i> Details
                                                 </button>
                                             </a>
+                                            @if(!$s->is_published)
+                                            <a href="{{ route('shifts.edit', $s) }}">
+                                                <button class="btn btn-warning" type="button">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </button>
+                                            </a>
+                                            @endif
                                             <button class="btn btn-danger delete" type="button" data-id="{{ $s->id }}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </button>

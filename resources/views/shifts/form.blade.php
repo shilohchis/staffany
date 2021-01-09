@@ -70,8 +70,14 @@
                                             $startDate = old('start_date');
                                             $startTime = old('start_time');
                                         } else {
-                                            $startDate = $cur == 'shifts.edit' ? $shift->start_date : $date;
-                                            $startTime = $cur == 'shifts.edit' ? $shift->start_time : $time;
+                                            if($cur == 'shifts.edit') {
+                                                $start = explode(' ', $shift->start_time);
+                                                $startDate = $start[0];
+                                                $startTime = $start[1];
+                                            } else {
+                                                $startDate = $date;
+                                                $startTime = $time;
+                                            }
                                         }
                                     @endphp
                                     <input
@@ -113,8 +119,14 @@
                                             $endDate = old('end_date');
                                             $endTime = old('end_time');
                                         } else {
-                                            $endDate = $cur == 'shifts.edit' ? $shift->end_date : $date;
-                                            $endTime = $cur == 'shifts.edit' ? $shift->end_time : $time;
+                                            if($cur == 'shifts.edit') {
+                                                $end = explode(' ', $shift->end_time);
+                                                $endDate = $end[0];
+                                                $endTime = $end[1];
+                                            } else {
+                                                $endDate = $date;
+                                                $endTime = $time;
+                                            }
                                         }
                                     @endphp
                                     <input
