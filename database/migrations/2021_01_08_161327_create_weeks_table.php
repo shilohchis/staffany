@@ -15,13 +15,19 @@ class CreateWeeksTable extends Migration
     {
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
-            $table->jsonb('monday')->nullable();
-            $table->jsonb('tuesday')->nullable();
-            $table->jsonb('wednesday')->nullable();
-            $table->jsonb('thursday')->nullable();
-            $table->jsonb('friday')->nullable();
-            $table->jsonb('saturday')->nullable();
-            $table->jsonb('sunday')->nullable();
+            $table->string('title');
+            $table->enum('day', [
+                'monday',
+                'tuesday',
+                'wednesday',
+                'thursday',
+                'friday',
+                'saturday',
+                'sunday'
+            ]);
+            $table->unsignedTinyInteger('week');
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
             $table->boolean('is_published')->default(false);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
