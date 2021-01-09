@@ -73,6 +73,9 @@
                                                     <i class="fa fa-eye"></i> Details
                                                 </button>
                                             </a>
+                                            <button class="btn btn-danger delete" type="button" data-id="{{ $s->id }}">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -94,24 +97,31 @@
 @section('custom-script')
     $(document).ready(function() {
         const shiftUrl = '{{ route('shifts.index') }}';
+        const ajaxObj = {
+            url: '',
+            method: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: null,
+            error: function(err) {
+                console.log('err', err);
+            }
+        };
+        const reload = function() {
+            location.reload();
+        };
         $('button.publish').click(function() {
             const id = $(this).data('id');
-            $.ajax({
-                url: `${shiftUrl}/${id}/publish`,
-                method: 'put',
-                contentType: "application/json",
-                dataType: "json",
-                processData: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data) {
-                    location.reload();
-                },
-                error: function(err) {
-                    console.log('err', err);
-                }
-            });
+            $.ajax({ ...ajaxObj, url: `${shiftUrl}/${id}/publish`, method: 'put', success: reload });
+        });
+
+        $('button.delete').click(function() {
+            const id = $(this).data('id');
+            $.ajax({ ...ajaxObj, url: `${shiftUrl}/${id}`, method: 'delete', success: reload });
         });
     });
 @endsection
