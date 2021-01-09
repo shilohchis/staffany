@@ -14,6 +14,11 @@ trait CommonHelper {
         return Carbon::now()->format($format);
     }
 
+    private function formatDateTime($data, $format)
+    {
+        return Carbon::create($data)->format($format);
+    }
+
     private function getDayFromDate($date)
     {
         return strtolower( Carbon::create($date)->dayName );

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\CommonHelper;
 
 class Week extends Model
 {
+    use CommonHelper;
+
     protected $fillable = [
         'title',
         'day',
@@ -45,6 +48,16 @@ class Week extends Model
     {
         return $query->whereDate('start_time', '>=', $start)
                      ->whereDate('end_time', '<=', $end);
+    }
+
+    public function getStartTimeAttribute($val)
+    {
+        return $this->formatDateTime($val, 'd F Y H:i');
+    }
+
+    public function getEndTimeAttribute($val)
+    {
+        return $this->formatDateTime($val, 'd F Y H:i');
     }
 
     public function user()

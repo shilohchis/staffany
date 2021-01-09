@@ -87,6 +87,20 @@ class ShiftController extends Controller
 
     }
 
+    public function publish(Week $shift)
+    {
+        if(!$shift) {
+            return $this->resp(false, __('shift.nofound'), 404);
+        }
+        $date = $this->startAndEndDateOfWeek($shift->start_time, 'Y-m-d');
+        $shifts = Week::betweenDate($date['start'], $date['end'])
+                    ->byUser(auth()->user()->id)
+                    ->update([
+                        'is_published' => true
+                    ]);
+        return $this->resp(true, __('shift.published'));
+    }
+
     public function destroy(Week $shift)
     {
         if(!$shift) {

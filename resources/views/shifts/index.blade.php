@@ -56,7 +56,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($shifts as $s)
+                                    <tr>
+                                        <td class="tborder">{{ $s->title }}</td>
+                                        <td class="tborder">{{ ucwords($s->day) }} {{ $s->big_unit }}</td>
+                                        <td class="tborder">{{ $s->week }} {{ $s->small_unit }}</td>
+                                        <td class="tborder">{{ $s->start_time }} - {{ $s->end_time }}</td>
+                                        <td class="tborder">
+                                            <button class="btn btn-{{ $s->is_published ? 'success' : 'secondary publish' }}" type="button" data-id="{{ $s->id }}">
+                                                {{ $s->is_published ? 'Published' : 'Publish' }}
+                                            </button>
+                                        </td>
+                                        <td class="tborder text-right">
+                                            <a href="{{ route('shifts.show', $s) }}">
+                                                <button class="btn btn-success" type="button">
+                                                    <i class="fa fa-eye"></i> Details
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             {{ $shifts->links() }}
@@ -73,5 +92,26 @@
 @endsection
 
 @section('custom-script')
-
+    $(document).ready(function() {
+        const shiftUrl = '{{ route('shifts.index') }}';
+        $('button.publish').click(function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: `${shiftUrl}/${id}/publish`,
+                method: 'put',
+                contentType: "application/json",
+                dataType: "json",
+                processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(err) {
+                    console.log('err', err);
+                }
+            });
+        });
+    });
 @endsection
