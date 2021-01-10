@@ -55,7 +55,7 @@ class ShiftController extends Controller
     }
 
     public function store()
-    {   //dd(request()->all());
+    {
         $this->validating();
         try {
             Week::create([
@@ -81,6 +81,15 @@ class ShiftController extends Controller
         return view('dashboard', compact('shifts'));
     }
 
+    public function today()  //view
+    {
+        $date = $this->startAndEndDateOfWeek($this->now('Y-m-d'), 'Y-m-d');
+        $shifts = Week::betweenDate($date['start'], $date['end'])
+                    ->byUser(auth()->user()->id)
+                    ->get();
+        return view('dashboard', compact('shifts'));
+    }
+
     public function edit(Week $shift) //view
     {
         return view('shifts.form', compact('shift'));
@@ -88,7 +97,18 @@ class ShiftController extends Controller
 
     public function update(Week $shift)
     {
-
+        $this->validating();
+        try {
+            $shift->title = request('title');
+            $shift->day = $this->getDayFromDate( request('start_date') );
+            $shift->week = $this->getWeekNumberInMonth( request('start_date') );
+            $shift->start_time = request('start_date')." ".request('start_time');
+            $shift->end_time = request('end_date')." ".request('end_time');
+            $shift->save();
+            return $this->redirectWithMsg('success', __('flash.sedit'), 'shifts.index');
+        } catch(Exception $e) {
+            return $this->redirectWithMsg('error', $e->getMessage(), 'back');
+        }
     }
 
     public function publish(Week $shift)

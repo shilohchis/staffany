@@ -59,6 +59,14 @@
                     <div><hr class="line"></div>
                     <div><hr class="line"></div>
                 </div>
+                <style>
+                    @foreach ($shifts as $index => $s)
+                        .shift-{{ $index }} {
+                            grid-row: {{ $s->start_min }} / {{ $s->end_min }};
+                            height: min-content;
+                        }
+                    @endforeach
+                </style>
                 <div class="chart-bars">
                     @foreach ($shifts as $index => $s)
                         <div class="cht shift-{{ $index }}">

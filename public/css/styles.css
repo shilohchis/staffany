@@ -4014,16 +4014,23 @@ dd, dt {
 
 .chart-bars {
     display: grid;
-    grid-template-rows: repeat(1440, 1fr);
+    grid-template-rows: repeat(1440, auto);
     grid-template-columns: 1fr;
     margin-left: 4rem;
     margin-top: 10px;
     position: absolute;
     height: 745px;
+    /* 745 */
 }
 
+/* .chart-line {
+    display: grid;
+    grid-template-rows: repeat(25, 31px);
+} */
+
 .cht {
-    background-color: #216FF6;
+    background-color: #DAF621;
     padding: 10px 25px;
     border-radius: 5px;
+    color: black;
 }

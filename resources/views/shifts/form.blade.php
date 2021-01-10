@@ -27,7 +27,7 @@
                     <div class="panel-body clearfix">
                         <form action="{{ $cur == 'shifts.create' ? route('shifts.store') : route('shifts.update', $shift) }}" method="POST">
                             @csrf
-                            @if($cur == 'shifts.update')
+                            @if($cur == 'shifts.edit')
                                 @method('PUT')
                             @endif
                             <div class="form-group row">

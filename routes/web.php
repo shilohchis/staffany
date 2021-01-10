@@ -22,7 +22,7 @@ Auth::routes(['register' => false]);
 Route::group([
     'middleware' => ['auth']
 ], function() {
-    Route::get('home', 'HomeController@index')->name('home');
     Route::resource('shifts', 'ShiftController');
     Route::put('/shifts/{shift}/publish', 'ShiftController@publish')->name('shifts.publish');
+    Route::get('/shifts/today', 'ShiftController@show')->name('home');
 });
