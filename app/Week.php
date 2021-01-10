@@ -60,6 +60,29 @@ class Week extends Model
         return $this->formatDateTime($this->attributes['end_time'], 'd F Y H:i');
     }
 
+    public function getDateChartAttribute()
+    {
+        return $this->formatDateTime($this->attributes['start_time'], 'd/m/Y');
+    }
+
+    public function getTimeChartAttribute()
+    {
+        $start = $this->formatDateTime($this->attributes['start_time'], 'H:i');
+        $end = $this->formatDateTime($this->attributes['end_time'], 'H:i');
+
+        return $start." ".$end;
+    }
+
+    public function getStartMinAttribute()
+    {
+        return $this->getMinutes('start', $this->attributes['start_time']);
+    }
+
+    public function getEndMinAttribute()
+    {
+        return $this->getMinutes('start', $this->attributes['end_time']);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -72,10 +72,10 @@
                                                     <i class="fa fa-edit"></i> Edit
                                                 </button>
                                             </a>
-                                            @endif
                                             <button class="btn btn-danger delete" type="button" data-id="{{ $s->id }}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

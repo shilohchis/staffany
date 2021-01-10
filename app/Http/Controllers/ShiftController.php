@@ -74,7 +74,11 @@ class ShiftController extends Controller
 
     public function show(Week $shift)  //view
     {
-
+        $date = $this->startAndEndDateOfWeek($shift->start_time, 'Y-m-d');
+        $shifts = Week::betweenDate($date['start'], $date['end'])
+                    ->byUser(auth()->user()->id)
+                    ->get();
+        return view('dashboard', compact('shifts'));
     }
 
     public function edit(Week $shift) //view

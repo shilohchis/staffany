@@ -3980,3 +3980,50 @@ dd, dt {
 .ml-15r {
     margin-left: 15rem;
 }
+
+.chart {
+    display: grid;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-col {
+    display: grid;
+    grid-template-columns: 45px 1fr;
+    grid-template-rows: repeat(25, 31px);
+}
+
+.line {
+    border-top: solid 1px #f5a212;
+}
+
+.chart-col-items {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(25, 1fr);
+}
+
+.chart-col-items span {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.chart-col-items .line {
+    height: 10px;
+    margin-top: 10px;
+}
+
+.chart-bars {
+    display: grid;
+    grid-template-rows: repeat(1440, 1fr);
+    grid-template-columns: 1fr;
+    margin-left: 4rem;
+    margin-top: 10px;
+    position: absolute;
+    height: 745px;
+}
+
+.cht {
+    background-color: #216FF6;
+    padding: 10px 25px;
+    border-radius: 5px;
+}
