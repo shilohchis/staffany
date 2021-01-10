@@ -75,18 +75,21 @@
             </div>
             <style>
                 @foreach ($shifts as $index => $s)
+                    @php
+                        $start = intval(floor($s->start_min / 10)) + intval(floor($s->start_min % 10 / 10)) + 1;
+                        $end = intval(floor($s->end_min / 10)) + intval(floor($s->end_min % 10 / 10)) + 1;
+                    @endphp
                     .shift-{{ $index }} {
-                        grid-row: {{ $s->start_min + 1 }} / {{ $s->end_min + 1}};
-                        height: min-content;
+                        grid-row: {{ $start }} / {{ $end }};
                     }
                 @endforeach
             </style>
             <div class="chart-bars">
                 @foreach ($shifts as $index => $s)
                     <div class="cht shift-{{ $index }}">
-                        <p>{{ $s->title }}</p>
-                        <p>{{ $s->date_chart }}</p>
-                        <p>{{ $s->time_chart }}</p>
+                        <span>{{ $s->title }}</span>
+                        <span>{{ $s->date_chart }}</span>
+                        <span>{{ $s->time_chart }}</span>
                     </div>
                 @endforeach
             </div>

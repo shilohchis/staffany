@@ -81,12 +81,12 @@ class Week extends Model
 
     public function getStartMinAttribute()
     {
-        return $this->getHours('start', $this->attributes['start_time']);
+        return $this->getMinutes('start', $this->attributes['start_time']);
     }
 
     public function getEndMinAttribute()
     {
-        return $this->getHours('start', $this->attributes['end_time']);
+        return $this->getMinutes('start', $this->attributes['end_time']);
     }
 
     public function user()
