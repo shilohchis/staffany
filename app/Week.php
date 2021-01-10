@@ -50,6 +50,12 @@ class Week extends Model
                      ->whereDate('end_time', '<=', $end);
     }
 
+    public function scopeOnDate($query, $date)
+    {
+        return $query->whereDate('start_time', '=', $date)
+                     ->whereDate('end_time', '=', $date);
+    }
+
     public function getStartTextAttribute()
     {
         return $this->formatDateTime($this->attributes['start_time'], 'd F Y H:i');
@@ -75,12 +81,12 @@ class Week extends Model
 
     public function getStartMinAttribute()
     {
-        return $this->getMinutes('start', $this->attributes['start_time']);
+        return $this->getHours('start', $this->attributes['start_time']);
     }
 
     public function getEndMinAttribute()
     {
-        return $this->getMinutes('start', $this->attributes['end_time']);
+        return $this->getHours('start', $this->attributes['end_time']);
     }
 
     public function user()

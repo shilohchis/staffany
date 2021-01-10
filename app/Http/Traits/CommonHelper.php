@@ -50,6 +50,17 @@ trait CommonHelper {
         }
     }
 
+    private function getHours($type, $date)
+    {
+        $date1 = Carbon::create($date);
+        $date2 = Carbon::create($date);
+        if($type == 'start') {
+            return $date2->diffInHours($date1->startOfDay());
+        } else if($type == 'end') {
+            return $date2->endOfDay()->diffInHours($date1);
+        }
+    }
+
     private function resp($status = true, $data, $code = 200)
 	{
 		if($code == 409) {

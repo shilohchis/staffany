@@ -61,7 +61,7 @@
                                             </button>
                                         </td>
                                         <td class="tborder text-right">
-                                            <a href="{{ route('shifts.show', $s) }}">
+                                            <a href="{{ route('home', ['date' => $s->start_time]) }}">
                                                 <button class="btn btn-success" type="button">
                                                     <i class="fa fa-eye"></i> Details
                                                 </button>

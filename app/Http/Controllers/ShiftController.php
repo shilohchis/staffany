@@ -72,22 +72,13 @@ class ShiftController extends Controller
         }
     }
 
-    public function show(Week $shift)  //view
+    public function show()  //view
     {
-        $date = $this->startAndEndDateOfWeek($shift->start_time, 'Y-m-d');
-        $shifts = Week::betweenDate($date['start'], $date['end'])
+        $now = $this->now('Y-m-d');
+        $shifts = Week::onDate(request()->has('date') ? request('date') : $now)
                     ->byUser(auth()->user()->id)
                     ->get();
-        return view('dashboard', compact('shifts'));
-    }
-
-    public function today()  //view
-    {
-        $date = $this->startAndEndDateOfWeek($this->now('Y-m-d'), 'Y-m-d');
-        $shifts = Week::betweenDate($date['start'], $date['end'])
-                    ->byUser(auth()->user()->id)
-                    ->get();
-        return view('dashboard', compact('shifts'));
+        return view('dashboard', compact('shifts', 'now'));
     }
 
     public function edit(Week $shift) //view
